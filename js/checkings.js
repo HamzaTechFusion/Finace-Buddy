@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (withdrawAmount > 0 && withdrawAmount <= balance) {
             balance -= withdrawAmount; // Subtract withdrawal from balance
             updateBalanceDisplay(); // Update displayed balance
-            localStorage.setItem("savingsBalance", balance); // Save balance to localStorage
+            localStorage.setItem("checkingsBalance", balance); // Save balance to localStorage
 
             document.getElementById("message").textContent = "Withdrawal successful!";
             document.getElementById("message").style.color = "green";
