@@ -4,114 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkings Account</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-
-        .navbar {
-            background-color: #0078D7;
-            padding: 10px 0;
-            color: white;
-        }
-
-        .navbar ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            padding: 0;
-            margin: 0;
-        }
-
-        .navbar ul li {
-            margin: 0 15px;
-        }
-
-        .navbar ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .navbar ul li a:hover {
-            text-decoration: underline;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        input[type="number"], button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #0078D7;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #005fa3;
-        }
-
-        #message {
-            font-weight: bold;
-            margin-top: 10px;
-            visibility: hidden; /* Hidden by default */
-        }
-    </style>
+    <link rel="stylesheet" href="../css/stylesheet.css">
 </head>
 <body>
-    <div class="navbar">
-        <ul>
-            <li><a href="../index.html">Home</a></li>
-            <li><a href="checkings.html">Checkings</a></li>
-            <li><a href="savings.html">Savings</a></li>
-            <li><a href="Credit-card.html">Credit Card</a></li>
-            <li><a href="transactions.html">Transactions</a></li>
-        </ul>
-    </div>
-
     <div class="container">
-        <h1>Checkings Account</h1>
-        <p>Balance: <span id="balance">$0.00</span></p>
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Accounts</a>
+                    <ul class="dropdown-content">
+                        <li><a href="../html/checkings.html">Checkings</a></li>
+                        <li><a href="../html/savings.html">Savings</a></li>
+                    </ul>
+                </li>
+                <li><a href="../html/Credit-card.html">Credit Card</a></li>
+                <li><a href="../html/credit-score.html">Credit Score</a></li>
+                <li><a href="../html/transactions.html">Transactions</a></li>
+            </ul>
+        </div>
 
-        <!-- Deposit Section -->
-        <label for="depositAmount">Deposit Amount:</label>
-        <input type="number" id="depositAmount" placeholder="Enter amount" />
-        <button id="depositButton">Deposit</button>
+        <!-- Checkings Account Section -->
+        <div id="checkings-account" class="account-section">
+            <h2>Checkings Account</h2>
+            <p>Balance: $<span id="balance">0.00</span></p>
 
-        <!-- Withdraw Section -->
-        <label for="withdrawAmount">Withdraw Amount:</label>
-        <input type="number" id="withdrawAmount" placeholder="Enter amount" />
-        <button id="withdrawButton">Withdraw</button>
+            <!-- Deposit Section -->
+            <label for="depositAmount">Deposit Amount:</label>
+            <input type="number" id="depositAmount" min="0" step="0.01">
+            <button id="depositButton">Deposit</button>
 
-        <!-- Transfer Section -->
-        <label for="transferAmount">Transfer to Savings:</label>
-        <input type="number" id="transferAmount" placeholder="Enter amount" />
-        <button id="transferButton">Transfer</button>
+            <!-- Withdraw Section -->
+            <label for="withdrawAmount">Withdraw Amount:</label>
+            <input type="number" id="withdrawAmount" min="0" step="0.01">
+            <button id="withdrawButton">Withdraw</button>
 
-        <p id="message"></p>
+            <!-- Transfer Section -->
+            <label for="transferAmount">Transfer to Savings:</label>
+            <input type="number" id="transferAmount" min="0" step="0.01">
+            <button id="transferButton">Transfer</button>
+
+            <p id="message"></p>
+        </div>
     </div>
 
     <script src="checkings.js"></script>
