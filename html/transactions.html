@@ -10,45 +10,88 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .navbar {
-            background-color: #0078D7;
+            background-color: #007bff;
             padding: 10px 0;
-            color: white;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .navbar ul {
             list-style: none;
-            display: flex;
-            justify-content: center;
-            padding: 0;
             margin: 0;
+            padding: 0;
         }
 
-        .navbar ul li {
+        .navbar li {
+            display: inline;
             margin: 0 15px;
         }
 
-        .navbar ul li a {
+        .navbar a {
             color: white;
             text-decoration: none;
             font-weight: bold;
         }
 
-        .navbar ul li a:hover {
+        .navbar a:hover {
             text-decoration: underline;
         }
 
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        .navbar .dropdown {
+            position: relative; 
+            display: inline-block;
+        }
+
+        .navbar .dropbtn {
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar .dropdown-content {
+            display: none; 
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 150px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navbar .dropdown-content li {
+            list-style: none;
+        }
+
+        .navbar .dropdown-content a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+        }
+
+        .navbar .dropdown:hover .dropdown-content {
+            display: block; 
+        }
+
+        .navbar .dropdown-content a:hover {
+            background-color: #ddd;
+            color: #007bff;
         }
 
         h1 {
