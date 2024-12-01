@@ -7,7 +7,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to update the displayed balance
     function updateBalanceDisplay() {
         document.getElementById("balance").textContent = balance.toFixed(2);
-        console.log("Balance updated:", balance); // Debug log
+    }
+
+    // Function to display status messages
+    function showMessage(message, type = "success") {
+        const messageBox = document.getElementById("message");
+        messageBox.textContent = message;
+        messageBox.style.color = type === "success" ? "green" : "red";
+        messageBox.style.visibility = "visible";
+
+        // Hide the message after 3 seconds
+        setTimeout(() => {
+            messageBox.style.visibility = "hidden";
+        }, 3000);
     }
 
     // Function to log transactions in localStorage
@@ -28,9 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const depositInput = document.getElementById("depositAmount");
         const depositAmount = parseFloat(depositInput.value);
 
-        console.log("Deposit button clicked"); // Debug log
-        console.log("Deposit amount entered:", depositAmount); // Debug log
-
         if (depositAmount > 0) {
             balance += depositAmount;
             updateBalanceDisplay();
@@ -39,13 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
             // Log transaction
             logTransaction("Deposit", "Checkings", null, depositAmount);
 
-            document.getElementById("message").textContent = "Deposit successful!";
-            document.getElementById("message").style.color = "green";
-            console.log("New balance after deposit:", balance); // Debug log
+            showMessage(`Successfully deposited $${depositAmount.toFixed(2)}.`, "success");
         } else {
-            document.getElementById("message").textContent = "Enter a valid deposit amount.";
-            document.getElementById("message").style.color = "red";
-            console.log("Invalid deposit amount entered"); // Debug log
+            showMessage("Enter a valid deposit amount.", "error");
         }
 
         depositInput.value = "";
@@ -56,10 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const withdrawInput = document.getElementById("withdrawAmount");
         const withdrawAmount = parseFloat(withdrawInput.value);
 
-        console.log("Withdraw button clicked"); // Debug log
-        console.log("Withdraw amount entered:", withdrawAmount); // Debug log
-        console.log("Current balance before withdrawal:", balance); // Debug log
-
         if (withdrawAmount > 0 && withdrawAmount <= balance) {
             balance -= withdrawAmount;
             updateBalanceDisplay();
@@ -68,17 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
             // Log transaction
             logTransaction("Withdrawal", "Checkings", null, withdrawAmount);
 
-            document.getElementById("message").textContent = "Withdrawal successful!";
-            document.getElementById("message").style.color = "green";
-            console.log("New balance after withdrawal:", balance); // Debug log
+            showMessage(`Successfully withdrew $${withdrawAmount.toFixed(2)}.`, "success");
         } else if (withdrawAmount > balance) {
-            document.getElementById("message").textContent = "Insufficient funds.";
-            document.getElementById("message").style.color = "red";
-            console.log("Insufficient funds for withdrawal."); // Debug log
+            showMessage("Insufficient funds.", "error");
         } else {
-            document.getElementById("message").textContent = "Enter a valid withdrawal amount.";
-            document.getElementById("message").style.color = "red";
-            console.log("Invalid withdrawal amount entered."); // Debug log
+            showMessage("Enter a valid withdrawal amount.", "error");
         }
 
         withdrawInput.value = "";
