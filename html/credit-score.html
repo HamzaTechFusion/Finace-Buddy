@@ -52,6 +52,16 @@
             <h3>Improvement Tips:</h3>
             <ul id="improvementTips"></ul>
         </div>
+
+        <script>
+            // Optional JavaScript to toggle dropdown on click (instead of hover)
+            document.querySelector(".dropbtn").addEventListener("click", function (e) {
+                e.preventDefault(); 
+                const dropdownContent = this.nextElementSibling; 
+                dropdownContent.style.display =
+                    dropdownContent.style.display === "block" ? "none" : "block";
+            });
+        </script>
     </div>
     
 
