@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
     let balance = parseFloat(localStorage.getItem("checkingsBalance")) || 0;
 
+    // Update displayed balance
     function updateBalanceDisplay() {
         document.getElementById("balance").textContent = `$${balance.toFixed(2)}`;
-        console.log("Updated balance display:", balance);
     }
 
+    // Display status messages
     function showMessage(message, type = "success") {
         const messageBox = document.getElementById("message");
         messageBox.textContent = message;
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
     }
 
+    // Log transaction to localStorage
     function logTransaction(type, fromAccount, toAccount, amount) {
         const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
         transactions.push({
@@ -26,12 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
             amount: parseFloat(amount).toFixed(2),
         });
         localStorage.setItem("transactions", JSON.stringify(transactions));
-        console.log("Transaction logged:", { type, fromAccount, toAccount, amount });
     }
 
+    // Handle deposits
     document.getElementById("depositButton").addEventListener("click", () => {
         const depositAmount = parseFloat(document.getElementById("depositAmount").value);
-        console.log("Deposit button clicked, amount:", depositAmount);
         if (isNaN(depositAmount) || depositAmount <= 0) {
             showMessage("Enter a valid deposit amount.", "error");
             return;
@@ -44,9 +45,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("depositAmount").value = "";
     });
 
+    // Handle withdrawals
     document.getElementById("withdrawButton").addEventListener("click", () => {
         const withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value);
-        console.log("Withdraw button clicked, amount:", withdrawAmount);
         if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
             showMessage("Enter a valid withdrawal amount.", "error");
             return;
@@ -63,9 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("withdrawAmount").value = "";
     });
 
+    // Handle transfers to Savings
     document.getElementById("transferButton").addEventListener("click", () => {
         const transferAmount = parseFloat(document.getElementById("transferAmount").value);
-        console.log("Transfer button clicked, amount:", transferAmount);
         if (isNaN(transferAmount) || transferAmount <= 0) {
             showMessage("Enter a valid transfer amount.", "error");
             return;
@@ -90,5 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("transferAmount").value = "";
     });
 
+    // Initialize balance display
     updateBalanceDisplay();
 });
