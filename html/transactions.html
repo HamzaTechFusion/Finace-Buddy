@@ -3,33 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Buddy - Transaction History</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Finance Buddy - Transactions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .navbar {
+            background-color: #0078D7;
+            padding: 10px;
+            color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table thead {
+            background-color: #0078D7;
+            color: white;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .filters {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .filters select, .filters button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0078D7;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .filters button:hover {
+            background-color: #005fa3;
+        }
+
+        .clear-button {
+            background-color: #ff4d4d;
+        }
+
+        .clear-button:hover {
+            background-color: #e60000;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar">
         <ul>
             <li><a href="../index.html">Home</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropbtn">Accounts</a>
-                <ul class="dropdown-content">
-                    <li><a href="../html/checkings.html">Checkings</a></li>
-                    <li><a href="../html/savings.html">Savings</a></li>
-                </ul>
-            </li>
+            <li><a href="../html/checkings.html">Checkings</a></li>
+            <li><a href="../html/savings.html">Savings</a></li>
             <li><a href="../html/Credit-card.html">Credit Card</a></li>
-            <li><a href="../html/credit-score.html">Credit Score</a></li>
             <li><a href="../html/transactions.html">Transactions</a></li>
         </ul>
     </div>
 
     <div class="container">
-        <div class="hero-section">
-            <h1>Transaction History</h1>
-            <h2>View All Activity for Checkings and Savings</h2>
+        <h1>Transaction History</h1>
+        <h2>View All Activity for Checkings and Savings</h2>
+
+        <div class="filters">
+            <select id="filterType">
+                <option value="all">All Transactions</option>
+                <option value="Deposit">Deposits</option>
+                <option value="Withdrawal">Withdrawals</option>
+                <option value="Transfer">Transfers</option>
+            </select>
+            <button id="clearTransactions" class="clear-button">Clear Transactions</button>
         </div>
 
-        <!-- Transaction History Table -->
         <table>
             <thead>
                 <tr>
@@ -41,30 +145,59 @@
                 </tr>
             </thead>
             <tbody id="transactionHistory">
-                <!-- Transaction history will be dynamically populated here -->
+                <!-- Transactions will dynamically populate here -->
             </tbody>
         </table>
     </div>
 
     <script>
-        // Fetch transaction history from localStorage
-        const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+        // Fetch transactions from localStorage
+        let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+        const transactionHistory = document.getElementById("transactionHistory");
+        const filterType = document.getElementById("filterType");
 
-        // Reference to the table body
-        const transactionTable = document.getElementById("transactionHistory");
+        // Function to render transactions
+        function renderTransactions(filter = "all") {
+            transactionHistory.innerHTML = ""; // Clear the table
 
-        // Populate the transaction table
-        transactions.forEach(transaction => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${new Date(transaction.date).toLocaleString()}</td>
-                <td>${transaction.type}</td>
-                <td>${transaction.fromAccount || "-"}</td>
-                <td>${transaction.toAccount || "-"}</td>
-                <td>${transaction.amount.toFixed(2)}</td>
-            `;
-            transactionTable.appendChild(row);
+            const filteredTransactions = filter === "all"
+                ? transactions
+                : transactions.filter(transaction => transaction.type === filter);
+
+            if (filteredTransactions.length === 0) {
+                transactionHistory.innerHTML = `<tr><td colspan="5">No transactions found.</td></tr>`;
+                return;
+            }
+
+            filteredTransactions.forEach(transaction => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${new Date(transaction.date).toLocaleString()}</td>
+                    <td>${transaction.type}</td>
+                    <td>${transaction.fromAccount || "-"}</td>
+                    <td>${transaction.toAccount || "-"}</td>
+                    <td>$${transaction.amount}</td>
+                `;
+                transactionHistory.appendChild(row);
+            });
+        }
+
+        // Handle filter selection
+        filterType.addEventListener("change", () => {
+            renderTransactions(filterType.value);
         });
+
+        // Handle clear transactions
+        document.getElementById("clearTransactions").addEventListener("click", () => {
+            if (confirm("Are you sure you want to clear all transactions?")) {
+                localStorage.removeItem("transactions");
+                transactions = [];
+                renderTransactions();
+            }
+        });
+
+        // Initial render
+        renderTransactions();
     </script>
 </body>
 </html>
