@@ -22,11 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
             type: type,
             fromAccount: fromAccount,
             toAccount: toAccount || "-",
-            amount: amount.toFixed(2),
+            amount: parseFloat(amount).toFixed(2),
         });
         localStorage.setItem("transactions", JSON.stringify(transactions));
     }
 
+    // Handle deposits
     document.getElementById("depositButton").addEventListener("click", () => {
         const depositAmount = parseFloat(document.getElementById("depositAmount").value);
         if (isNaN(depositAmount) || depositAmount <= 0) {
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("depositAmount").value = "";
     });
 
+    // Handle withdrawals
     document.getElementById("withdrawButton").addEventListener("click", () => {
         const withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value);
         if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
@@ -59,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("withdrawAmount").value = "";
     });
 
+    // Handle transfers
     document.getElementById("transferButton").addEventListener("click", () => {
         const transferAmount = parseFloat(document.getElementById("transferAmount").value);
         if (isNaN(transferAmount) || transferAmount <= 0) {
@@ -69,9 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
             showMessage("Insufficient funds.", "error");
             return;
         }
+
+        // Deduct from Checkings
         balance -= transferAmount;
         localStorage.setItem("checkingsBalance", balance.toFixed(2));
+        updateBalanceDisplay();
 
+        // Add to Savings
         let savingsBalance = parseFloat(localStorage.getItem("savingsBalance")) || 0;
         savingsBalance += transferAmount;
         localStorage.setItem("savingsBalance", savingsBalance.toFixed(2));
@@ -81,5 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("transferAmount").value = "";
     });
 
+    // Initialize the page
     updateBalanceDisplay();
 });
