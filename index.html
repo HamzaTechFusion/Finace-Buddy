@@ -12,15 +12,21 @@
         <div class="navbar">
             <ul>
                 <li><a href="#home">Home</a></li>
-                <li><a href="#accounts">Accounts</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Accounts</a>
+                    <ul class="dropdown-content">
+                        <li><a href="./html/checking.html">Checking</a></li>
+                        <li><a href="./html/savings.html">Savings</a></li>
+                    </ul>
+                </li>
                 <li><a href="#credit-card">Credit Card</a></li>
                 <li><a href="./html/credit-score.html">Credit Score</a></li>
             </ul>
         </div>
 
-        <div id="home" class = "hero-section">
+        <div id="home" class="hero-section">
             <h2>Welcome to Finance Buddy</h2>
-            <img src = "assets/IMG_0094.jpg" alt = "homepageImage" class = "home-image">
+            <img src="assets/IMG_0094.jpg" alt="homepageImage" class="home-image">
         </div>
 
         <div id="description" class="description">
@@ -32,25 +38,19 @@
                 <li>Check your credit score and find ways to improve it</li>
             </ul>
             <p>Everything you need to stay on top of your finances!</p>
-            <div class="navbar">
-    <ul>
-        <li><a href="./index.html">Home</a></li>
-        <li class="dropdown">
-            <a href="#" class="dropbtn">Accounts</a>
-            <ul class="dropdown-content">
-                <li><a href="./html/checking.html">Checking</a></li>
-                <li><a href="./html/savings.html">Savings</a></li>
-            </ul>
-        </li>
-        <li><a href="#credit-card">Credit Card</a></li>
-        <li><a href="./html/credit-score.html">Credit Score</a></li>
-    </ul>
-</div>
-
         </div> 
+        
         <script>
+            // Optional JavaScript to toggle dropdown on click (instead of hover)
+            document.querySelector(".dropbtn").addEventListener("click", function (e) {
+                e.preventDefault(); // Prevent default link behavior
+                const dropdownContent = this.nextElementSibling; // Get the dropdown content
+                dropdownContent.style.display =
+                    dropdownContent.style.display === "block" ? "none" : "block";
+            });
+        </script>
 
-
-
+    </div>
 </body>
 </html>
+
