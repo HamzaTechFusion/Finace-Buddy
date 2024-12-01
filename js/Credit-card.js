@@ -1,4 +1,3 @@
-// Initialize card balance and transaction history
 let cardBalance = 500.00; // Starting balance
 const transactionHistory = [];
 
@@ -20,37 +19,3 @@ function addTransactionToHistory(type, amount) {
     transactionItem.innerText = `${type.charAt(0).toUpperCase() + type.slice(1)}: $${amount.toFixed(2)}`;
     historyList.appendChild(transactionItem);
 }
-
-// Handle transaction submission
-submitButton.addEventListener('click', () => {
-    const amount = parseFloat(amountInput.value);
-    const transactionType = transactionTypeSelect.value;
-
-    if (isNaN(amount) || amount <= 0) {
-        alert("Please enter a valid amount.");
-        return;
-    }
-
-    if (transactionType === 'purchase') {
-        // Handle purchase: increase balance
-        cardBalance += amount;
-        addTransactionToHistory('purchase', amount);
-    } else if (transactionType === 'pay') {
-        // Handle payment: decrease balance
-        if (amount > cardBalance) {
-            alert("Insufficient balance to make the payment.");
-            return;
-        }
-        cardBalance -= amount;
-        addTransactionToHistory('payment', amount);
-    }
-
-    // Update balance on UI
-    updateBalance();
-    
-    // Clear input fields
-    amountInput.value = '';
-});
-
-// Initialize the balance and transaction history
-updateBalance();
