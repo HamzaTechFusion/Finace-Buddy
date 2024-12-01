@@ -32,6 +32,16 @@
                 <li>Check your credit score and find ways to improve it</li>
             </ul>
             <p>Everything you need to stay on top of your finances!</p>
-        </div>        
+        </div> 
+        <script>
+    // Toggle dropdown menu on click for Accounts tab
+    document.querySelector(".dropbtn").addEventListener("click", function (e) {
+        e.preventDefault(); // Prevent the default link behavior
+        const dropdownContent = this.nextElementSibling; // Get the dropdown menu
+        dropdownContent.style.display =
+            dropdownContent.style.display === "block" ? "none" : "block";
+    });
+</script>
+
 </body>
 </html>
