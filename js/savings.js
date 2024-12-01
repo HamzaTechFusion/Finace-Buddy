@@ -31,4 +31,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Handle withdrawals
-    document.getElementById("withdrawButton").addEventLi
+    document.getElementById("withdrawButton").addEventListener("click", () => {
+        const withdrawInput = document.getElementById("withdrawAmount");
+        const withdrawAmount = parseFloat(withdrawInput.value) || 0;
+
+        console.log("Withdraw amount entered:", withdrawAmount); // Debug log
+
+        if (withdrawAmount > 0 && withdrawAmount <= balance) {
+            balance -= withdrawAmount;
+            updateBalanceDisplay();
+            localStorage.setItem("savingsBalance", balance);
+            document.getElementById("message").textContent = "Withdrawal successful!";
+            document.getElementById("message").style.color = "green";
+            console.log("New balance after withdrawal:", balance); // Debug log
+        } else if (withdrawAmount > balance) {
+            document.getElementById("message").textContent = "Insufficient funds.";
+            document.getElementById("message").style.color = "red";
+            console.log("Insufficient funds for withdrawal"); // Debug log
+        } else {
+            document.getElementById("message").textContent = "Enter a valid withdrawal amount.";
+            document.getElementById("message").style.color = "red";
+            console.log("Invalid withdrawal amount entered"); // Debug log
+        }
+
+        withdrawInput.value = ""; // Clear the input field
+    });
+
+    // Initialize the display
+    updateBalanceDisplay();
+});
