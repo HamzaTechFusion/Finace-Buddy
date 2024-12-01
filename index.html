@@ -38,6 +38,21 @@
                 <li>Check your credit score and find ways to improve it</li>
             </ul>
             <p>Everything you need to stay on top of your finances!</p>
+            <div id="savings-account" class="account-section">
+    <h2>Savings Account</h2>
+    <p>Balance: $<span id="balance">0.00</span></p>
+
+    <label for="depositAmount">Deposit Amount:</label>
+    <input type="number" id="depositAmount" min="0" step="0.01">
+    <button id="depositButton">Deposit</button>
+
+    <label for="withdrawAmount">Withdraw Amount:</label>
+    <input type="number" id="withdrawAmount" min="0" step="0.01">
+    <button id="withdrawButton">Withdraw</button>
+
+    <p id="message"></p>
+</div>
+
         </div> 
         
         <script>
