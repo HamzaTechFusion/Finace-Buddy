@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    let balance = parseFloat(localStorage.getItem("checkingBalance")) || 0;
+    let balance = parseFloat(localStorage.getItem("checkingsBalance")) || 0;
 
     // Function to update the displayed balance
     function updateBalanceDisplay() {
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (depositAmount > 0) {
             balance += depositAmount; // Add deposit to balance
             updateBalanceDisplay(); // Update displayed balance
-            localStorage.setItem("checkingBalance", balance); // Save balance to localStorage
+            localStorage.setItem("checkingsBalance", balance); // Save balance to localStorage
 
             document.getElementById("message").textContent = "Deposit successful!";
             document.getElementById("message").style.color = "green";
