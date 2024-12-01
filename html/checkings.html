@@ -74,14 +74,12 @@
             background-color: #005fa3;
         }
 
-        /* Style for the message box */
         #message {
             font-weight: bold;
             margin-top: 10px;
             visibility: hidden; /* Hidden by default */
         }
 
-        /* Style for the transaction log table */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -133,32 +131,27 @@
         <input type="number" id="withdrawAmount" placeholder="Enter amount" />
         <button id="withdrawButton">Withdraw</button>
 
-        <!-- Transfer to Savings Section -->
+        <!-- Transfer Section -->
         <label for="transferAmount">Transfer to Savings:</label>
         <input type="number" id="transferAmount" placeholder="Enter amount" />
         <button id="transferButton">Transfer</button>
 
-        <!-- Inline message box -->
         <p id="message"></p>
 
-        <!-- Transaction Log Section -->
-        <div id="transaction-log">
-            <h3>Transaction Log</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th>From Account</th>
-                        <th>To Account</th>
-                        <th>Amount ($)</th>
-                    </tr>
-                </thead>
-                <tbody id="transactionHistory">
-                    <!-- Transactions will populate dynamically -->
-                </tbody>
-            </table>
-        </div>
+        <!-- Transaction Log -->
+        <h3>Transaction Log</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>From Account</th>
+                    <th>To Account</th>
+                    <th>Amount ($)</th>
+                </tr>
+            </thead>
+            <tbody id="transactionHistory"></tbody>
+        </table>
     </div>
 
     <script src="checkings.js"></script>
