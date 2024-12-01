@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Buddy - Bank Transaction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Accounts</a></li>
+            <li><a href="#">Transactions</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="hero-section">
+            <h1>Welcome to Finance Buddy</h1>
+            <h2>Secure Your Transactions with Ease</h2>
+        </div>
+
+        <form id="transactionForm">
+            <label for="fromAccount">From Account:</label>
+            <input type="text" id="fromAccount" name="fromAccount" placeholder="Enter From Account ID" required>
+
+            <label for="toAccount">To Account:</label>
+            <input type="text" id="toAccount" name="toAccount" placeholder="Enter To Account ID" required>
+
+            <label for="amount">Amount ($):</label>
+            <input type="number" id="amount" name="amount" min="1" placeholder="Enter Amount" required>
+
+            <button type="submit">Submit Transaction</button>
+        </form>
+
+        <div id="response"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
 
