@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Finance Buddy - Credit Card System</h1>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="container">
+        <div class="card-info">
+            <h2>Your Credit Card Balance</h2>
+            <div id="balance">
+                <p>$500.00</p> <!-- Default starting balance, this will be updated via JavaScript -->
+            </div>
+        </div>
+
+        <!-- Transaction Form Section -->
+        <div class="transaction-form">
+            <h2>Make a Transaction</h2>
+            <label for="amount">Enter Amount:</label>
+            <input type="number" id="amount" placeholder="Amount to purchase or pay" required>
+
+            <label for="transaction-type">Choose Transaction Type:</label>
+            <select id="transaction-type">
+                <option value="purchase">Purchase</option>
+                <option value="pay">Pay</option>
+            </select>
+
+            <button id="submit-transaction">Submit Transaction</button>
+        </div>
+
+        <!-- Transaction History Section -->
+        <div class="transaction-history">
+            <h2>Transaction History</h2>
+            <ul id="history-list">
+                <!-- Transactions will be listed here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Finance Buddy. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+
+</body>
+
+</html>
