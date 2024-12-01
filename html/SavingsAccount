@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Account</title>
+    <link rel="stylesheet" href="../css/stylesheet.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="#accounts">Accounts</a></li>
+                <li><a href="#credit-card">Credit Card</a></li>
+                <li><a href="./credit-score.html">Credit Score</a></li>
+            </ul>
+        </div>
+
+        <div id="savings-account" class="account-section">
+            <h2>Savings Account</h2>
+            <p>Balance: $<span id="savingsBalance">0.00</span></p>
+
+            <label for="depositAmount">Deposit Amount:</label>
+            <input type="number" id="depositAmount" min="0" step="0.01">
+            <button id="depositButton">Deposit</button>
+
+            <label for="withdrawAmount">Withdraw Amount:</label>
+            <input type="number" id="withdrawAmount" min="0" step="0.01">
+            <button id="withdrawButton">Withdraw</button>
+
+            <p id="savingsMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the savings account balance
+        let savingsBalance = 0;
+
+        // Function to update the displayed balance
+        function updateSavingsDisplay() {
+            document.getElementById("savingsBalance").textContent = savingsBalance.toFixed(2);
+        }
+
+        // Deposit functionality
+        document.getElementById("depositButton").addEventListener("click", function () {
+            const depositAmount = parseFloat(document.getElementById("depositAmount").value) || 0;
+            if (depositAmount > 0) {
+                savingsBalance += depositAmount;
+                updateSavingsDisplay();
+                document.getElementById("savingsMessage").textContent = "Deposit successful!";
+                document.getElementById("savingsMessage").style.color = "green";
+            } else {
+                document.getElementById("savingsMessage").textContent = "Enter a valid deposit amount.";
+                document.getElementById("savingsMessage").style.color = "red";
+            }
+        });
+
+        // Withdrawal functionality
+        document.getElementById("withdrawButton").addEventListener("click", function () {
+            const withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value) || 0;
+            if (withdrawAmount > 0 && withdrawAmount <= savingsBalance) {
+                savingsBalance -= withdrawAmount;
+                updateSavingsDisplay();
+                document.getElementById("savingsMessage").textContent = "Withdrawal successful!";
+                document.getElementById("savingsMessage").style.color = "green";
+            } else if (withdrawAmount > savingsBalance) {
+                document.getElementById("savingsMessage").textContent = "Insufficient funds.";
+                document.getElementById("savingsMessage").style.color = "red";
+            } else {
+                document.getElementById("savingsMessage").textContent = "Enter a valid withdrawal amount.";
+                document.getElementById("savingsMessage").style.color = "red";
+            }
+        });
+
+        // Initial display update
+        updateSavingsDisplay();
+    </script>
+</body>
+</html>
