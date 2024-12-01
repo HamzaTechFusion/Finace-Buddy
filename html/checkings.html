@@ -4,56 +4,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkings Account</title>
-    <link rel="stylesheet" href="../css/stylesheet.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .navbar {
+            background-color: #0078D7;
+            padding: 10px 0;
+            color: white;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .navbar ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input[type="number"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #0078D7;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005fa3;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Navigation Bar -->
-        <div class="navbar">
-         <ul>
+    <div class="navbar">
+        <ul>
             <li><a href="../index.html">Home</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropbtn">Accounts</a>
-                <ul class="dropdown-content">
-                    <li><a href="../html/checkings.html">Checkings</a></li>
-                    <li><a href="../html/savings.html">Savings</a></li>
-                </ul>
-            </li>
-            <li><a href="../html/Credit-card.html">Credit Card</a></li>
-            <li><a href="../html/credit-score.html">Credit Score</a></li>
-            <li><a href="../html/transactions.html">Transactions</a></li>
+            <li><a href="checkings.html">Checkings</a></li>
+            <li><a href="savings.html">Savings</a></li>
+            <li><a href="Credit-card.html">Credit Card</a></li>
+            <li><a href="transactions.html">Transactions</a></li>
         </ul>
     </div>
 
-        <!-- Checkings Account Section -->
-        <div id="Checkings-account" class="account-section">
-            <h2>Checkings Account</h2>
-            <p>Balance: $<span id="balance">0.00</span></p>
+    <div class="container">
+        <h1>Checkings Account</h1>
+        <p>Balance: <span id="balance">$0.00</span></p>
 
-            <label for="depositAmount">Deposit Amount:</label>
-            <input type="number" id="depositAmount" min="0" step="0.01">
-            <button id="depositButton">Deposit</button>
+        <label for="depositAmount">Deposit Amount:</label>
+        <input type="number" id="depositAmount" placeholder="Enter amount" />
 
-            <label for="withdrawAmount">Withdraw Amount:</label>
-            <input type="number" id="withdrawAmount" min="0" step="0.01">
-            <button id="withdrawButton">Withdraw</button>
+        <button id="depositButton">Deposit</button>
 
-            <p id="message"></p>
-        </div>
-        
-        <script>
-            // Optional JavaScript to toggle dropdown on click (instead of hover)
-            document.querySelector(".dropbtn").addEventListener("click", function (e) {
-                e.preventDefault(); 
-                const dropdownContent = this.nextElementSibling; 
-                dropdownContent.style.display =
-                dropdownContent.style.display === "block" ? "none" : "block";
-            });
-        </script>
-        
+        <label for="withdrawAmount">Withdraw Amount:</label>
+        <input type="number" id="withdrawAmount" placeholder="Enter amount" />
+
+        <button id="withdrawButton">Withdraw</button>
     </div>
 
-    <!-- Link to JavaScript -->
-    <script src="../js/checkings.js"></script>
+    <script>
+        // Initialize balance
+        let balance = parseFloat(localStorage.getItem("checkingsBalance")) || 0;
+
+        // Update balance display
+        const balanceElement = document.getElementById("balance");
+        function updateBalanceDisplay() {
+            balanceElement.textContent = `$${balance.toFixed(2)}`;
+        }
+        updateBalanceDisplay();
+
+        // Function to log transactions
+        function logTransaction(type, fromAccount, toAccount, amount) {
+            const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+            transactions.push({
+                date: new Date().toISOString(),
+                type: type,
+                fromAccount: fromAccount,
+                toAccount: toAccount || null,
+                amount: parseFloat(amount).toFixed(2),
+            });
+            localStorage.setItem("transactions", JSON.stringify(transactions));
+        }
+
+        // Handle Deposit
+        document.getElementById("depositButton").addEventListener("click", () => {
+            const depositAmount = parseFloat(document.getElementById("depositAmount").value);
+
+            if (isNaN(depositAmount) || depositAmount <= 0) {
+                alert("Please enter a valid deposit amount.");
+                return;
+            }
+
+            balance += depositAmount;
+            localStorage.setItem("checkingsBalance", balance.toFixed(2));
+            updateBalanceDisplay();
+
+            // Log transaction
+            logTransaction("Deposit", "Checkings", null, depositAmount);
+
+            alert(`Successfully deposited $${depositAmount.toFixed(2)}.`);
+            document.getElementById("depositAmount").value = "";
+        });
+
+        // Handle Withdrawal
+        document.getElementById("withdrawButton").addEventListener("click", () => {
+            const withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value);
+
+            if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
+                alert("Please enter a valid withdrawal amount.");
+                return;
+            }
+
+            if (withdrawAmount > balance) {
+                alert("Insufficient funds.");
+                return;
+            }
+
+            balance -= withdrawAmount;
+            localStorage.setItem("checkingsBalance", balance.toFixed(2));
+            updateBalanceDisplay();
+
+            // Log transaction
+            logTransaction("Withdrawal", "Checkings", null, withdrawAmount);
+
+            alert(`Successfully withdrew $${withdrawAmount.toFixed(2)}.`);
+            document.getElementById("withdrawAmount").value = "";
+        });
+    </script>
 </body>
 </html>
