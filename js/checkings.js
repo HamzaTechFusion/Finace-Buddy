@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to update the displayed balance
     function updateBalanceDisplay() {
-        document.getElementById("balance").textContent = balance.toFixed(2);
+        document.getElementById("balance").textContent = `$${balance.toFixed(2)}`;
     }
 
     // Function to display status messages
