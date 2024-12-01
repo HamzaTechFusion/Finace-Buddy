@@ -1,4 +1,4 @@
-let cardBalance = 500.00; // Starting balance
+let cardBalance = 0.00; // Starting balance
 const transactionHistory = [];
 
 // Get references to DOM elements
