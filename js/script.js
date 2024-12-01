@@ -41,4 +41,13 @@ document.getElementById("calculateButton").addEventListener("click", function ()
 
     const tipsList = document.getElementById("improvementTips");
     tipsList.innerHTML = tips.map(tip => `<li>${tip}</li>`).join("") || "<li>You're doing great!</li>";
+
+    // Toggle dropdown menu on click for Accounts tab
+document.querySelector(".dropbtn").addEventListener("click", function (e) {
+    e.preventDefault(); // Prevent the default link behavior
+    const dropdownContent = this.nextElementSibling; // Get the dropdown menu
+    dropdownContent.style.display =
+        dropdownContent.style.display === "block" ? "none" : "block";
+});
+
 });
