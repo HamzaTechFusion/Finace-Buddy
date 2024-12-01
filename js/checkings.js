@@ -2,16 +2,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize the balance from localStorage
     let balance = parseFloat(localStorage.getItem("checkingsBalance")) || 0;
 
+    // Function to update the displayed balance
     function updateBalanceDisplay() {
         document.getElementById("balance").textContent = `$${balance.toFixed(2)}`;
     }
 
+    // Function to display success or error messages
     function showMessage(message, isSuccess = true) {
         const messageElement = document.getElementById("message");
         messageElement.textContent = message;
         messageElement.style.color = isSuccess ? "green" : "red";
+        messageElement.style.display = "block"; // Ensure the message is visible
     }
 
+    // Function to log transactions
     function logTransaction(type, fromAccount, toAccount, amount) {
         const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
         transactions.push({
@@ -24,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("transactions", JSON.stringify(transactions));
     }
 
+    // Event listener for deposits
     document.getElementById("depositButton").addEventListener("click", () => {
         const depositInput = document.getElementById("depositAmount");
         const depositAmount = parseFloat(depositInput.value);
@@ -41,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
         depositInput.value = ""; // Clear the input field
     });
 
+    // Event listener for withdrawals
     document.getElementById("withdrawButton").addEventListener("click", () => {
         const withdrawInput = document.getElementById("withdrawAmount");
         const withdrawAmount = parseFloat(withdrawInput.value);
@@ -58,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         withdrawInput.value = ""; // Clear the input field
     });
 
+    // Event listener for transfers
     document.getElementById("transferButton").addEventListener("click", () => {
         const transferInput = document.getElementById("transferAmount");
         const transferAmount = parseFloat(transferInput.value);
@@ -77,5 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
         transferInput.value = ""; // Clear the input field
     });
 
-    updateBalanceDisplay(); // Initialize balance display
+    // Initialize balance display
+    updateBalanceDisplay();
 });
