@@ -43,63 +43,8 @@ body {
     text-decoration: underline;
 }
 
-/* Existing navbar styles */
-.navbar {
-    background-color: #007bff;
-    padding: 10px 0;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.navbar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar li {
-    display: inline;
-    margin: 0 15px;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-/* Existing navbar styles */
-.navbar {
-    background-color: #007bff;
-    padding: 10px 0;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.navbar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar li {
-    display: inline;
-    margin: 0 15px;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.navbar a:hover {
-    text-decoration: underline;
-}
-
-/* Dropdown-specific styles */
 .navbar .dropdown {
-    position: relative; /* Allows dropdown content to be positioned relative to this parent */
+    position: relative; 
     display: inline-block;
 }
 
@@ -110,9 +55,8 @@ body {
     font-weight: bold;
 }
 
-/* Dropdown content container (hidden by default) */
 .navbar .dropdown-content {
-    display: none; /* Hidden until hover or click */
+    display: none; 
     position: absolute;
     background-color: #f9f9f9;
     min-width: 150px;
@@ -122,7 +66,6 @@ body {
     margin: 0;
 }
 
-/* Dropdown links */
 .navbar .dropdown-content li {
     list-style: none;
 }
@@ -134,22 +77,13 @@ body {
     display: block;
 }
 
-/* Show the dropdown on hover */
 .navbar .dropdown:hover .dropdown-content {
-    display: block; /* Makes the dropdown visible on hover */
+    display: block; 
 }
 
-/* Add hover effect for dropdown links */
 .navbar .dropdown-content a:hover {
     background-color: #ddd;
     color: #007bff;
-}
-.account-section {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f1f1f1;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .account-section h2 {
