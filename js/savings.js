@@ -11,43 +11,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const depositInput = document.getElementById("depositAmount");
         const depositAmount = parseFloat(depositInput.value) || 0;
 
+        console.log("Deposit amount entered:", depositAmount); // Debug log
+
         if (depositAmount > 0) {
-            balance += depositAmount;
-            updateBalanceDisplay();
-            localStorage.setItem("savingsBalance", balance);
+            balance += depositAmount; // Add deposit to balance
+            updateBalanceDisplay(); // Update displayed balance
+            localStorage.setItem("savingsBalance", balance); // Save balance to localStorage
+
             document.getElementById("message").textContent = "Deposit successful!";
             document.getElementById("message").style.color = "green";
+            console.log("New balance after deposit:", balance); // Debug log
         } else {
             document.getElementById("message").textContent = "Enter a valid deposit amount.";
             document.getElementById("message").style.color = "red";
+            console.log("Invalid deposit amount entered"); // Debug log
         }
 
-        depositInput.value = ""; // Clear the text box
+        depositInput.value = ""; // Clear the input field
     });
 
     // Handle withdrawals
-    document.getElementById("withdrawButton").addEventListener("click", () => {
-        const withdrawInput = document.getElementById("withdrawAmount");
-        const withdrawAmount = parseFloat(withdrawInput.value) || 0;
-
-        if (withdrawAmount > 0 && withdrawAmount <= balance) {
-            balance -= withdrawAmount;
-            updateBalanceDisplay();
-            localStorage.setItem("savingsBalance", balance);
-            document.getElementById("message").textContent = "Withdrawal successful!";
-            document.getElementById("message").style.color = "green";
-        } else if (withdrawAmount > balance) {
-            document.getElementById("message").textContent = "Insufficient funds.";
-            document.getElementById("message").style.color = "red";
-        } else {
-            document.getElementById("message").textContent = "Enter a valid withdrawal amount.";
-            document.getElementById("message").style.color = "red";
-        }
-
-        withdrawInput.value = ""; // Clear the text box
-    });
-
-    // Initialize the display
-    updateBalanceDisplay();
-});
-
+    document.getElementById("withdrawButton").addEventLi
