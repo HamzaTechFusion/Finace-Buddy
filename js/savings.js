@@ -12,7 +12,7 @@ document.getElementById("depositButton").addEventListener("click", () => {
         document.getElementById("message").textContent = "Enter a valid deposit amount.";
         document.getElementById("message").style.color = "red";
     }
-    depositInput.value = ""; // Clear the text box
+    depositInput.value = ""; // Clear the text box after deposit
 });
 
 // Handle withdrawals
@@ -32,5 +32,5 @@ document.getElementById("withdrawButton").addEventListener("click", () => {
         document.getElementById("message").textContent = "Enter a valid withdrawal amount.";
         document.getElementById("message").style.color = "red";
     }
-    withdrawInput.value = ""; // Clear the text box
+    withdrawInput.value = ""; // Clear the text box after withdrawal
 });
