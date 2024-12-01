@@ -4,50 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Credit Card System</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    .container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background-color: #f9f9f9;
-    }
-    .input-field {
-      margin-bottom: 15px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    input[type="number"] {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .balance {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -73,48 +30,8 @@
     </div>
   </div>
 
-  <script>
-    // Initial balance for the credit card
-    let cardBalance = 0;
-
-    // Update the balance display
-    function updateBalance() {
-      document.getElementById('cardBalance').textContent = cardBalance.toFixed(2);
-    }
-
-    // Add amount to the credit card
-    function addAmount() {
-      const amountToAdd = parseFloat(document.getElementById('purchaseAmount').value);
-
-      if (isNaN(amountToAdd) || amountToAdd <= 0) {
-        alert('Please enter a valid amount to add.');
-        return;
-      }
-
-      cardBalance += amountToAdd;
-      updateBalance();
-      document.getElementById('purchaseAmount').value = '';  // Clear input field
-    }
-
-    // Pay off the credit card
-    function payOffCard() {
-      const amountToPay = parseFloat(document.getElementById('payAmount').value);
-
-      if (isNaN(amountToPay) || amountToPay <= 0) {
-        alert('Please enter a valid amount to pay off.');
-        return;
-      }
-
-      if (amountToPay > cardBalance) {
-        alert('You cannot pay more than your current balance.');
-        return;
-      }
-
-      cardBalance -= amountToPay;
-      updateBalance();
-      document.getElementById('payAmount').value = '';  // Clear input field
-    }
-  </script>
+  <script src="script.js"></script>
 
 </body>
 </html>
+
