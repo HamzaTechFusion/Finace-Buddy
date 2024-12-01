@@ -25,9 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem("checkingsBalance", balance);
             logTransaction("Deposit", "Checkings", "-", depositAmount);
             updateBalanceDisplay();
-            document.getElementById("message").textContent = "Deposit successful!";
-        } else {
-            document.getElementById("message").textContent = "Invalid deposit amount.";
         }
     });
 
@@ -38,9 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem("checkingsBalance", balance);
             logTransaction("Withdraw", "Checkings", "-", withdrawAmount);
             updateBalanceDisplay();
-            document.getElementById("message").textContent = "Withdrawal successful!";
-        } else {
-            document.getElementById("message").textContent = "Invalid or insufficient funds.";
         }
     });
 
@@ -53,9 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem("savingsBalance", savingsBalance + transferAmount);
             logTransaction("Transfer", "Checkings", "Savings", transferAmount);
             updateBalanceDisplay();
-            document.getElementById("message").textContent = "Transfer successful!";
-        } else {
-            document.getElementById("message").textContent = "Invalid or insufficient funds.";
         }
     });
 
