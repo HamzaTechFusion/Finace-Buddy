@@ -80,6 +80,32 @@
             margin-top: 10px;
             visibility: hidden; /* Hidden by default */
         }
+
+        /* Style for the transaction log table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #0078D7;
+            color: white;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f4f4f4;
+        }
     </style>
 </head>
 <body>
@@ -97,101 +123,44 @@
         <h1>Checkings Account</h1>
         <p>Balance: <span id="balance">$0.00</span></p>
 
+        <!-- Deposit Section -->
         <label for="depositAmount">Deposit Amount:</label>
         <input type="number" id="depositAmount" placeholder="Enter amount" />
-
         <button id="depositButton">Deposit</button>
 
+        <!-- Withdraw Section -->
         <label for="withdrawAmount">Withdraw Amount:</label>
         <input type="number" id="withdrawAmount" placeholder="Enter amount" />
-
         <button id="withdrawButton">Withdraw</button>
+
+        <!-- Transfer to Savings Section -->
+        <label for="transferAmount">Transfer to Savings:</label>
+        <input type="number" id="transferAmount" placeholder="Enter amount" />
+        <button id="transferButton">Transfer</button>
 
         <!-- Inline message box -->
         <p id="message"></p>
+
+        <!-- Transaction Log Section -->
+        <div id="transaction-log">
+            <h3>Transaction Log</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>From Account</th>
+                        <th>To Account</th>
+                        <th>Amount ($)</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionHistory">
+                    <!-- Transactions will populate dynamically -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <script>
-        // Initialize balance
-        let balance = parseFloat(localStorage.getItem("checkingsBalance")) || 0;
-
-        // Update balance display
-        const balanceElement = document.getElementById("balance");
-        function updateBalanceDisplay() {
-            balanceElement.textContent = `$${balance.toFixed(2)}`;
-        }
-        updateBalanceDisplay();
-
-        // Function to display status messages
-        function showMessage(message, type = "success") {
-            const messageBox = document.getElementById("message");
-            messageBox.textContent = message;
-            messageBox.style.color = type === "success" ? "green" : "red";
-            messageBox.style.visibility = "visible";
-
-            // Hide the message after 3 seconds
-            setTimeout(() => {
-                messageBox.style.visibility = "hidden";
-            }, 3000);
-        }
-
-        // Function to log transactions
-        function logTransaction(type, fromAccount, toAccount, amount) {
-            const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-            transactions.push({
-                date: new Date().toISOString(),
-                type: type,
-                fromAccount: fromAccount,
-                toAccount: toAccount || null,
-                amount: parseFloat(amount).toFixed(2),
-            });
-            localStorage.setItem("transactions", JSON.stringify(transactions));
-        }
-
-        // Handle Deposit
-        document.getElementById("depositButton").addEventListener("click", () => {
-            const depositAmount = parseFloat(document.getElementById("depositAmount").value);
-
-            if (isNaN(depositAmount) || depositAmount <= 0) {
-                showMessage("Please enter a valid deposit amount.", "error");
-                return;
-            }
-
-            balance += depositAmount;
-            localStorage.setItem("checkingsBalance", balance.toFixed(2));
-            updateBalanceDisplay();
-
-            // Log transaction
-            logTransaction("Deposit", "Checkings", null, depositAmount);
-
-            showMessage(`Successfully deposited $${depositAmount.toFixed(2)}.`, "success");
-            document.getElementById("depositAmount").value = "";
-        });
-
-        // Handle Withdrawal
-        document.getElementById("withdrawButton").addEventListener("click", () => {
-            const withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value);
-
-            if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
-                showMessage("Please enter a valid withdrawal amount.", "error");
-                return;
-            }
-
-            if (withdrawAmount > balance) {
-                showMessage("Insufficient funds.", "error");
-                return;
-            }
-
-            balance -= withdrawAmount;
-            localStorage.setItem("checkingsBalance", balance.toFixed(2));
-            updateBalanceDisplay();
-
-            // Log transaction
-            logTransaction("Withdrawal", "Checkings", null, withdrawAmount);
-
-            showMessage(`Successfully withdrew $${withdrawAmount.toFixed(2)}.`, "success");
-            document.getElementById("withdrawAmount").value = "";
-        });
-    </script>
+    <script src="checkings.js"></script>
 </body>
 </html>
