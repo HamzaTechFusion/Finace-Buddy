@@ -1,13 +1,7 @@
-let balance = parseFloat(localStorage.getItem("savingsBalance")) || 0; // Initialize balance
-
-// Function to update the displayed balance
-function updateBalanceDisplay() {
-    document.getElementById("balance").textContent = balance.toFixed(2);
-}
-
 // Handle deposits
 document.getElementById("depositButton").addEventListener("click", () => {
-    const depositAmount = parseFloat(document.getElementById("depositAmount").value) || 0;
+    const depositInput = document.getElementById("depositAmount");
+    const depositAmount = parseFloat(depositInput.value) || 0;
     if (depositAmount > 0) {
         balance += depositAmount;
         updateBalanceDisplay();
@@ -18,11 +12,13 @@ document.getElementById("depositButton").addEventListener("click", () => {
         document.getElementById("message").textContent = "Enter a valid deposit amount.";
         document.getElementById("message").style.color = "red";
     }
+    depositInput.value = ""; // Clear the text box
 });
 
 // Handle withdrawals
 document.getElementById("withdrawButton").addEventListener("click", () => {
-    const withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value) || 0;
+    const withdrawInput = document.getElementById("withdrawAmount");
+    const withdrawAmount = parseFloat(withdrawInput.value) || 0;
     if (withdrawAmount > 0 && withdrawAmount <= balance) {
         balance -= withdrawAmount;
         updateBalanceDisplay();
@@ -36,7 +32,5 @@ document.getElementById("withdrawButton").addEventListener("click", () => {
         document.getElementById("message").textContent = "Enter a valid withdrawal amount.";
         document.getElementById("message").style.color = "red";
     }
+    withdrawInput.value = ""; // Clear the text box
 });
-
-// Initialize display
-updateBalanceDisplay();
