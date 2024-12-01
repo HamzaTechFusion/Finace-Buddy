@@ -12,34 +12,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.getElementById("depositButton").addEventListener("click", () => {
-        const amount = parseFloat(document.getElementById("depositAmount").value);
-        if (amount > 0) {
-            balance += amount;
+        const depositAmount = parseFloat(document.getElementById("depositAmount").value);
+        if (depositAmount > 0) {
+            balance += depositAmount;
             localStorage.setItem("checkingsBalance", balance);
-            logTransaction("Deposit", "Checkings", "-", amount);
+            logTransaction("Deposit", "Checkings", "-", depositAmount);
             updateBalanceDisplay();
+            document.getElementById("message").textContent = "Deposit successful!";
+        } else {
+            document.getElementById("message").textContent = "Enter a valid deposit amount.";
         }
     });
 
     document.getElementById("withdrawButton").addEventListener("click", () => {
-        const amount = parseFloat(document.getElementById("withdrawAmount").value);
-        if (amount > 0 && amount <= balance) {
-            balance -= amount;
+        const withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value);
+        if (withdrawAmount > 0 && withdrawAmount <= balance) {
+            balance -= withdrawAmount;
             localStorage.setItem("checkingsBalance", balance);
-            logTransaction("Withdrawal", "Checkings", "-", amount);
+            logTransaction("Withdraw", "Checkings", "-", withdrawAmount);
             updateBalanceDisplay();
+            document.getElementById("message").textContent = "Withdrawal successful!";
+        } else {
+            document.getElementById("message").textContent = "Insufficient funds or invalid amount.";
         }
     });
 
     document.getElementById("transferButton").addEventListener("click", () => {
-        const amount = parseFloat(document.getElementById("transferAmount").value);
-        if (amount > 0 && amount <= balance) {
-            balance -= amount;
+        const transferAmount = parseFloat(document.getElementById("transferAmount").value);
+        if (transferAmount > 0 && transferAmount <= balance) {
             const savingsBalance = parseFloat(localStorage.getItem("savingsBalance")) || 0;
+            balance -= transferAmount;
             localStorage.setItem("checkingsBalance", balance);
-            localStorage.setItem("savingsBalance", savingsBalance + amount);
-            logTransaction("Transfer", "Checkings", "Savings", amount);
+            localStorage.setItem("savingsBalance", savingsBalance + transferAmount);
+            logTransaction("Transfer", "Checkings", "Savings", transferAmount);
             updateBalanceDisplay();
+            document.getElementById("message").textContent = "Transfer successful!";
+        } else {
+            document.getElementById("message").textContent = "Insufficient funds or invalid amount.";
         }
     });
 
