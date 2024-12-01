@@ -3,11 +3,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateBalanceDisplay() {
         document.getElementById("balance").textContent = `$${balance.toFixed(2)}`;
+        console.log("Savings Balance Updated:", balance);
     }
 
     function logTransaction(type, fromAccount, toAccount, amount) {
         const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-        transactions.push({ date: new Date().toISOString(), type, fromAccount, toAccount, amount });
+        transactions.push({
+            date: new Date().toISOString(),
+            type,
+            fromAccount,
+            toAccount,
+            amount: parseFloat(amount).toFixed(2),
+        });
         localStorage.setItem("transactions", JSON.stringify(transactions));
     }
 
@@ -20,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updateBalanceDisplay();
             document.getElementById("message").textContent = "Deposit successful!";
         } else {
-            document.getElementById("message").textContent = "Enter a valid deposit amount.";
+            document.getElementById("message").textContent = "Invalid deposit amount.";
         }
     });
 
@@ -33,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updateBalanceDisplay();
             document.getElementById("message").textContent = "Withdrawal successful!";
         } else {
-            document.getElementById("message").textContent = "Insufficient funds or invalid amount.";
+            document.getElementById("message").textContent = "Invalid or insufficient funds.";
         }
     });
 
@@ -48,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updateBalanceDisplay();
             document.getElementById("message").textContent = "Transfer successful!";
         } else {
-            document.getElementById("message").textContent = "Insufficient funds or invalid amount.";
+            document.getElementById("message").textContent = "Invalid or insufficient funds.";
         }
     });
 
