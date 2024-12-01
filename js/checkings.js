@@ -25,24 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
             amount: amount.toFixed(2),
         });
         localStorage.setItem("transactions", JSON.stringify(transactions));
-        renderTransactionLog();
-    }
-
-    function renderTransactionLog() {
-        const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-        const transactionHistory = document.getElementById("transactionHistory");
-        transactionHistory.innerHTML = "";
-        transactions.forEach((transaction) => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${transaction.date}</td>
-                <td>${transaction.type}</td>
-                <td>${transaction.fromAccount}</td>
-                <td>${transaction.toAccount}</td>
-                <td>${transaction.amount}</td>
-            `;
-            transactionHistory.appendChild(row);
-        });
     }
 
     document.getElementById("depositButton").addEventListener("click", () => {
@@ -94,13 +76,10 @@ document.addEventListener("DOMContentLoaded", () => {
         savingsBalance += transferAmount;
         localStorage.setItem("savingsBalance", savingsBalance.toFixed(2));
 
-        updateBalanceDisplay();
         logTransaction("Transfer", "Checkings", "Savings", transferAmount);
         showMessage(`Transferred $${transferAmount.toFixed(2)} to Savings successfully.`, "success");
         document.getElementById("transferAmount").value = "";
     });
 
     updateBalanceDisplay();
-    renderTransactionLog();
 });
-
