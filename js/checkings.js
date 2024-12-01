@@ -105,5 +105,3 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize balance display on page load
     updateBalanceDisplay();
 });
-
-
