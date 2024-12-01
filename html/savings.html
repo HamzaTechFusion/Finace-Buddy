@@ -5,55 +5,212 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Savings Account</title>
     <link rel="stylesheet" href="../css/stylesheet.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #0078D7;
+            color: white;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f4f4f4;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <!-- Navigation Bar -->
         <div class="navbar">
-         <ul>
-             <li><a href="../index.html">Home</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropbtn">Accounts</a>
-                <ul class="dropdown-content">
-                    <li><a href="../html/checkings.html">Checkings</a></li>
-                    <li><a href="../html/savings.html">Savings</a></li>
-                </ul>
-            </li>
-            <li><a href="../html/Credit-card.html">Credit Card</a></li>
-            <li><a href="../html/credit-score.html">Credit Score</a></li>
-            <li><a href="../html/transactions.html">Transactions</a></li>
-        </ul>
-    </div>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Accounts</a>
+                    <ul class="dropdown-content">
+                        <li><a href="../html/checkings.html">Checkings</a></li>
+                        <li><a href="../html/savings.html">Savings</a></li>
+                    </ul>
+                </li>
+                <li><a href="../html/Credit-card.html">Credit Card</a></li>
+                <li><a href="../html/credit-score.html">Credit Score</a></li>
+                <li><a href="../html/transactions.html">Transactions</a></li>
+            </ul>
+        </div>
 
         <!-- Savings Account Section -->
         <div id="savings-account" class="account-section">
             <h2>Savings Account</h2>
             <p>Balance: $<span id="balance">0.00</span></p>
 
+            <!-- Deposit Section -->
             <label for="depositAmount">Deposit Amount:</label>
             <input type="number" id="depositAmount" min="0" step="0.01">
             <button id="depositButton">Deposit</button>
 
+            <!-- Withdraw Section -->
             <label for="withdrawAmount">Withdraw Amount:</label>
             <input type="number" id="withdrawAmount" min="0" step="0.01">
             <button id="withdrawButton">Withdraw</button>
 
+            <!-- Transfer Section -->
+            <label for="transferAmount">Transfer to Checkings:</label>
+            <input type="number" id="transferAmount" min="0" step="0.01">
+            <button id="transferButton">Transfer</button>
+
             <p id="message"></p>
         </div>
-        
-        <script>
-            // Optional JavaScript to toggle dropdown on click (instead of hover)
-            document.querySelector(".dropbtn").addEventListener("click", function (e) {
-                e.preventDefault(); 
-                const dropdownContent = this.nextElementSibling; 
-                dropdownContent.style.display =
-                dropdownContent.style.display === "block" ? "none" : "block";
-            });
-        </script>
-        
-    </div>
 
-    <!-- Link to JavaScript -->
-    <script src="../js/savings.js"></script>
+        <!-- Transaction Log Section -->
+        <div id="transaction-log">
+            <h3>Transaction Log</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>From Account</th>
+                        <th>To Account</th>
+                        <th>Amount ($)</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionHistory">
+                    <!-- Transactions will populate dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            // Initialize savings balance
+            let savingsBalance = parseFloat(localStorage.getItem("savingsBalance")) || 0;
+
+            // Function to update balance display
+            const updateBalanceDisplay = () => {
+                document.getElementById("balance").textContent = savingsBalance.toFixed(2);
+            };
+
+            // Function to log transactions in localStorage
+            const logTransaction = (type, fromAccount, toAccount, amount) => {
+                const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+                transactions.push({
+                    date: new Date().toLocaleString(),
+                    type: type,
+                    fromAccount: fromAccount,
+                    toAccount: toAccount || "-",
+                    amount: parseFloat(amount).toFixed(2),
+                });
+                localStorage.setItem("transactions", JSON.stringify(transactions));
+                renderTransactionLog();
+            };
+
+            // Function to render the transaction log
+            const renderTransactionLog = () => {
+                const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+                const transactionHistory = document.getElementById("transactionHistory");
+                transactionHistory.innerHTML = ""; // Clear existing rows
+                transactions.forEach((transaction) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${transaction.date}</td>
+                        <td>${transaction.type}</td>
+                        <td>${transaction.fromAccount}</td>
+                        <td>${transaction.toAccount}</td>
+                        <td>${transaction.amount}</td>
+                    `;
+                    transactionHistory.appendChild(row);
+                });
+            };
+
+            // Function to display messages
+            const showMessage = (message, type = "success") => {
+                const messageBox = document.getElementById("message");
+                messageBox.textContent = message;
+                messageBox.style.color = type === "success" ? "green" : "red";
+                messageBox.style.visibility = "visible";
+
+                // Hide the message after 3 seconds
+                setTimeout(() => {
+                    messageBox.style.visibility = "hidden";
+                }, 3000);
+            };
+
+            // Handle deposits
+            document.getElementById("depositButton").addEventListener("click", () => {
+                const depositAmount = parseFloat(document.getElementById("depositAmount").value);
+                if (isNaN(depositAmount) || depositAmount <= 0) {
+                    showMessage("Please enter a valid deposit amount.", "error");
+                    return;
+                }
+                savingsBalance += depositAmount;
+                localStorage.setItem("savingsBalance", savingsBalance.toFixed(2));
+                updateBalanceDisplay();
+                logTransaction("Deposit", "Savings", null, depositAmount);
+                showMessage(`Successfully deposited $${depositAmount.toFixed(2)}.`, "success");
+                document.getElementById("depositAmount").value = "";
+            });
+
+            // Handle withdrawals
+            document.getElementById("withdrawButton").addEventListener("click", () => {
+                const withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value);
+                if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
+                    showMessage("Please enter a valid withdrawal amount.", "error");
+                    return;
+                }
+                if (withdrawAmount > savingsBalance) {
+                    showMessage("Insufficient funds.", "error");
+                    return;
+                }
+                savingsBalance -= withdrawAmount;
+                localStorage.setItem("savingsBalance", savingsBalance.toFixed(2));
+                updateBalanceDisplay();
+                logTransaction("Withdrawal", "Savings", null, withdrawAmount);
+                showMessage(`Successfully withdrew $${withdrawAmount.toFixed(2)}.`, "success");
+                document.getElementById("withdrawAmount").value = "";
+            });
+
+            // Handle transfers
+            document.getElementById("transferButton").addEventListener("click", () => {
+                const transferAmount = parseFloat(document.getElementById("transferAmount").value);
+                if (isNaN(transferAmount) || transferAmount <= 0) {
+                    showMessage("Please enter a valid transfer amount.", "error");
+                    return;
+                }
+                if (transferAmount > savingsBalance) {
+                    showMessage("Insufficient funds for transfer.", "error");
+                    return;
+                }
+                // Deduct from Savings
+                savingsBalance -= transferAmount;
+                localStorage.setItem("savingsBalance", savingsBalance.toFixed(2));
+                updateBalanceDisplay();
+
+                // Add to Checkings
+                let checkingsBalance = parseFloat(localStorage.getItem("checkingsBalance")) || 0;
+                checkingsBalance += transferAmount;
+                localStorage.setItem("checkingsBalance", checkingsBalance.toFixed(2));
+
+                logTransaction("Transfer", "Savings", "Checkings", transferAmount);
+                showMessage(`Successfully transferred $${transferAmount.toFixed(2)} to Checkings.`, "success");
+                document.getElementById("transferAmount").value = "";
+            });
+
+            // Initialize the page
+            updateBalanceDisplay();
+            renderTransactionLog();
+        </script>
+    </div>
 </body>
 </html>
