@@ -10,6 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Balance updated:", balance); // Debug log
     }
 
+    // Function to log transactions in localStorage
+    function logTransaction(type, fromAccount, toAccount, amount) {
+        const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+        transactions.push({
+            date: new Date().toISOString(),
+            type: type,
+            fromAccount: fromAccount,
+            toAccount: toAccount || null,
+            amount: parseFloat(amount).toFixed(2),
+        });
+        localStorage.setItem("transactions", JSON.stringify(transactions));
+    }
+
     // Handle deposits
     document.getElementById("depositButton").addEventListener("click", () => {
         const depositInput = document.getElementById("depositAmount");
@@ -22,6 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
             balance += depositAmount;
             updateBalanceDisplay();
             localStorage.setItem("checkingsBalance", balance.toString());
+
+            // Log transaction
+            logTransaction("Deposit", "Checkings", null, depositAmount);
 
             document.getElementById("message").textContent = "Deposit successful!";
             document.getElementById("message").style.color = "green";
@@ -48,6 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
             balance -= withdrawAmount;
             updateBalanceDisplay();
             localStorage.setItem("checkingsBalance", balance.toString());
+
+            // Log transaction
+            logTransaction("Withdrawal", "Checkings", null, withdrawAmount);
 
             document.getElementById("message").textContent = "Withdrawal successful!";
             document.getElementById("message").style.color = "green";
