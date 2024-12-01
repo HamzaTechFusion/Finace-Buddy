@@ -34,14 +34,21 @@
             <p>Everything you need to stay on top of your finances!</p>
         </div> 
         <script>
-    // Toggle dropdown menu on click for Accounts tab
-    document.querySelector(".dropbtn").addEventListener("click", function (e) {
-        e.preventDefault(); // Prevent the default link behavior
-        const dropdownContent = this.nextElementSibling; // Get the dropdown menu
-        dropdownContent.style.display =
-            dropdownContent.style.display === "block" ? "none" : "block";
-    });
-</script>
+<div class="navbar">
+    <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropbtn">Accounts</a>
+            <ul class="dropdown-content">
+                <li><a href="./html/checking.html">Checking</a></li>
+                <li><a href="./html/savings.html">Savings</a></li>
+            </ul>
+        </li>
+        <li><a href="#credit-card">Credit Card</a></li>
+        <li><a href="./html/credit-score.html">Credit Score</a></li>
+    </ul>
+</div>
+
 
 </body>
 </html>
