@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance Buddy - Transactions</title>
     <style>
+        /* General Styling */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -14,17 +15,16 @@
 
         .navbar {
             background-color: #0078D7;
-            padding: 10px;
+            padding: 10px 0;
             color: white;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .navbar ul {
             list-style: none;
             display: flex;
             justify-content: center;
-            margin: 0;
             padding: 0;
+            margin: 0;
         }
 
         .navbar ul li {
@@ -32,8 +32,8 @@
         }
 
         .navbar ul li a {
-            text-decoration: none;
             color: white;
+            text-decoration: none;
             font-weight: bold;
         }
 
@@ -42,16 +42,16 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 600px;
             margin: 20px auto;
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
-        h1, h2 {
-            text-align: center;
+        h1 {
             color: #333;
         }
 
@@ -67,7 +67,7 @@
         }
 
         table th, table td {
-            padding: 12px;
+            padding: 10px;
             text-align: center;
             border: 1px solid #ddd;
         }
@@ -81,30 +81,29 @@
         }
 
         .filters {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
+            margin-bottom: 15px;
         }
 
-        .filters select, .filters button {
+        select, button {
+            width: 45%;
             padding: 10px;
+            margin: 10px 2%;
             border: none;
             border-radius: 5px;
-            background-color: #0078D7;
-            color: white;
-            font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
+            color: white;
         }
 
-        .filters button:hover {
-            background-color: #005fa3;
+        select {
+            background-color: #0078D7;
         }
 
-        .clear-button {
+        button {
             background-color: #ff4d4d;
         }
 
-        .clear-button:hover {
+        button:hover {
             background-color: #e60000;
         }
     </style>
@@ -122,8 +121,6 @@
 
     <div class="container">
         <h1>Transaction History</h1>
-        <h2>View All Activity for Checkings and Savings</h2>
-
         <div class="filters">
             <select id="filterType">
                 <option value="all">All Transactions</option>
@@ -131,7 +128,7 @@
                 <option value="Withdrawal">Withdrawals</option>
                 <option value="Transfer">Transfers</option>
             </select>
-            <button id="clearTransactions" class="clear-button">Clear Transactions</button>
+            <button id="clearTransactions">Clear All</button>
         </div>
 
         <table>
@@ -156,7 +153,7 @@
         const transactionHistory = document.getElementById("transactionHistory");
         const filterType = document.getElementById("filterType");
 
-        // Function to render transactions
+        // Render Transactions
         function renderTransactions(filter = "all") {
             transactionHistory.innerHTML = ""; // Clear the table
 
@@ -176,18 +173,19 @@
                     <td>${transaction.type}</td>
                     <td>${transaction.fromAccount || "-"}</td>
                     <td>${transaction.toAccount || "-"}</td>
-                    <td>$${transaction.amount}</td>
+                    <td>$${transaction.amount.toFixed(2)}</td>
                 `;
                 transactionHistory.appendChild(row);
             });
         }
 
-        // Handle filter selection
+        // Filter Transactions
         filterType.addEventListener("change", () => {
-            renderTransactions(filterType.value);
+            const selectedFilter = filterType.value;
+            renderTransactions(selectedFilter);
         });
 
-        // Handle clear transactions
+        // Clear All Transactions
         document.getElementById("clearTransactions").addEventListener("click", () => {
             if (confirm("Are you sure you want to clear all transactions?")) {
                 localStorage.removeItem("transactions");
@@ -196,7 +194,7 @@
             }
         });
 
-        // Initial render
+        // Initial Render
         renderTransactions();
     </script>
 </body>
