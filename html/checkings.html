@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkings Account</title>
+    <title>Savings Account</title>
     <link rel="stylesheet" href="../css/stylesheet.css">
 </head>
 <body>
     <div class="container">
+        <!-- Navigation Bar -->
         <div class="navbar">
-            <ul>
+         <ul>
                 <li><a href="../index.html">Home</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropbtn">Accounts</a>
@@ -21,11 +22,12 @@
                 <li><a href="#credit-card">Credit Card</a></li>
                 <li><a href="../html/credit-score.html">Credit Score</a></li>
                 <li><a href="../html/transactions.html">Transactions</a></li>
-            </ul>
-        </div>
+        </ul>
+    </div>
 
-        <div class="account-section">
-            <h2>Checkings Account</h2>
+        <!-- Savings Account Section -->
+        <div id="savings-account" class="account-section">
+            <h2>Savings Account</h2>
             <p>Balance: $<span id="balance">0.00</span></p>
 
             <label for="depositAmount">Deposit Amount:</label>
@@ -38,15 +40,20 @@
 
             <p id="message"></p>
         </div>
+        
+        <script>
+            // Optional JavaScript to toggle dropdown on click (instead of hover)
+            document.querySelector(".dropbtn").addEventListener("click", function (e) {
+                e.preventDefault(); 
+                const dropdownContent = this.nextElementSibling; 
+                dropdownContent.style.display =
+                dropdownContent.style.display === "block" ? "none" : "block";
+            });
+        </script>
+        
     </div>
 
-    <!-- Link the JavaScript -->
+    <!-- Link to JavaScript -->
     <script src="../js/checkings.js"></script>
 </body>
 </html>
-
-
-
-#home h2, #accounts h2, #credit-card h2 {
-    color: #555;
-}
