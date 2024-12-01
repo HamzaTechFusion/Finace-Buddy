@@ -17,25 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
             amount: parseFloat(amount).toFixed(2),
         });
         localStorage.setItem("transactions", JSON.stringify(transactions));
-        renderTransactionLog();
-    }
-
-    // Function to render the transaction log
-    function renderTransactionLog() {
-        const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-        const transactionHistory = document.getElementById("transactionHistory");
-        transactionHistory.innerHTML = ""; // Clear existing rows
-        transactions.forEach((transaction) => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${transaction.date}</td>
-                <td>${transaction.type}</td>
-                <td>${transaction.fromAccount}</td>
-                <td>${transaction.toAccount}</td>
-                <td>${transaction.amount}</td>
-            `;
-            transactionHistory.appendChild(row);
-        });
     }
 
     // Function to display messages
@@ -132,6 +113,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize the page
     updateBalanceDisplay();
-    renderTransactionLog();
 });
-
