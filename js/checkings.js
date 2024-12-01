@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("depositButton").addEventListener("click", () => {
         const depositAmount = parseFloat(document.getElementById("depositAmount").value);
-        console.log("Deposit clicked, amount:", depositAmount);
+        console.log("Deposit button clicked, amount:", depositAmount);
         if (isNaN(depositAmount) || depositAmount <= 0) {
             showMessage("Enter a valid deposit amount.", "error");
             return;
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("withdrawButton").addEventListener("click", () => {
         const withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value);
-        console.log("Withdraw clicked, amount:", withdrawAmount);
+        console.log("Withdraw button clicked, amount:", withdrawAmount);
         if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
             showMessage("Enter a valid withdrawal amount.", "error");
             return;
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("transferButton").addEventListener("click", () => {
         const transferAmount = parseFloat(document.getElementById("transferAmount").value);
-        console.log("Transfer clicked, amount:", transferAmount);
+        console.log("Transfer button clicked, amount:", transferAmount);
         if (isNaN(transferAmount) || transferAmount <= 0) {
             showMessage("Enter a valid transfer amount.", "error");
             return;
@@ -74,10 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
             showMessage("Insufficient funds.", "error");
             return;
         }
+
+        // Deduct from Checkings
         balance -= transferAmount;
         localStorage.setItem("checkingsBalance", balance.toFixed(2));
         updateBalanceDisplay();
 
+        // Add to Savings
         let savingsBalance = parseFloat(localStorage.getItem("savingsBalance")) || 0;
         savingsBalance += transferAmount;
         localStorage.setItem("savingsBalance", savingsBalance.toFixed(2));
