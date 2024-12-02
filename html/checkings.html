@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkings Acount</title>
+    <title>Checkings Account</title>
     <link rel="stylesheet" href="../css/stylesheet.css">
 </head>
 <body>
@@ -25,29 +25,28 @@
             </ul>
         </div>
 
-        <!-- Savings Account Section -->
+        <!-- Checkings Account Section -->
         <div class="account-section">
             <h2>Checkings Account</h2>
-            <p>Balance: <span id="balance">$0.00</span></p>
+            <p>Balance: <span id="checkings-balance">$0.00</span></p> <!-- Updated ID -->
 
-            <label for="depositAmount">Deposit Amount:</label>
-            <input type="number" id="depositAmount" min="0" step="0.01">
-            <button id="depositButton">Deposit</button>
+            <label for="checkings-depositAmount">Deposit Amount:</label> <!-- Updated ID -->
+            <input type="number" id="checkings-depositAmount" min="0" step="0.01">
+            <button id="checkings-depositButton">Deposit</button>
 
-            <label for="withdrawAmount">Withdraw Amount:</label>
-            <input type="number" id="withdrawAmount" min="0" step="0.01">
-            <button id="withdrawButton">Withdraw</button>
+            <label for="checkings-withdrawAmount">Withdraw Amount:</label> <!-- Updated ID -->
+            <input type="number" id="checkings-withdrawAmount" min="0" step="0.01">
+            <button id="checkings-withdrawButton">Withdraw</button>
 
-            <label for="transferAmount">Transfer to Savings:</label>
-            <input type="number" id="transferAmount" min="0" step="0.01">
-            <button id="transferButton">Transfer</button>
+            <label for="checkings-transferAmount">Transfer to Savings:</label> <!-- Updated ID -->
+            <input type="number" id="checkings-transferAmount" min="0" step="0.01">
+            <button id="checkings-transferButton">Transfer</button>
 
-            <p id="message" style="display: none;"></p>
+            <p id="checkings-message" style="display: none; margin-top: 20px;"></p> <!-- Updated ID -->
 
         </div>
     </div>
 
-    <!-- Link to JavaScript -->
     <script src="../js/checkings.js"></script>
 </body>
 </html>
