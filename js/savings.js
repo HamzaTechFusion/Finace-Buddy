@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let balance = parseFloat(localStorage.getItem("savingsBalance")) || 0;
 
     function updateBalanceDisplay() {
-        document.getElementById("savings-balance").textContent = `{balance.toFixed(2)}`;
+        document.getElementById("savings-balance").textContent = `$${balance.toFixed(2)}`;
         console.log("Savings Balance Updated:", balance);
     }
 
