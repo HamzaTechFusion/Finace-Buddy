@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkings Account</title>
+    <title>Savings Account</title>
     <link rel="stylesheet" href="../css/stylesheet.css">
 </head>
 <body>
@@ -25,9 +25,9 @@
             </ul>
         </div>
 
-        <!-- Checkings Account Section -->
+        <!-- Savings Account Section -->
         <div class="account-section">
-            <h2>Checkings Account</h2>
+            <h2>Savings Account</h2>
             <p>Balance: <span id="balance">$0.00</span></p>
 
             <label for="depositAmount">Deposit Amount:</label>
@@ -38,7 +38,7 @@
             <input type="number" id="withdrawAmount" min="0" step="0.01">
             <button id="withdrawButton">Withdraw</button>
 
-            <label for="transferAmount">Transfer to Savings:</label>
+            <label for="transferAmount">Transfer to Checkings:</label>
             <input type="number" id="transferAmount" min="0" step="0.01">
             <button id="transferButton">Transfer</button>
 
@@ -47,6 +47,7 @@
         </div>
     </div>
 
-    <script src="../js/checkings.js"></script>
+    <!-- Link to JavaScript -->
+    <script src="../js/savings.js"></script>
 </body>
 </html>
