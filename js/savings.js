@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateBalanceDisplay() {
         document.getElementById("savings-balance").textContent = `$${balance.toFixed(2)}`;
-        console.log("Savings Balance Updated:", balance);
     }
 
     function showMessage(message, isSuccess = true) {
