@@ -1,8 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
-    let balance = parseFloat(localStorage.getItem("savingsBalance")) || 0;
+    async function performOperation(action, amount, fromAccount = 'savings', toAccount = null) {
+        try {
+            const response = await fetch('../api/account_operations.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action,
+                    amount,
+                    account_type: fromAccount,
+                    from_account: fromAccount,
+                    to_account: toAccount
+                })
+            });
 
-    function updateBalanceDisplay() {
-        document.getElementById("savings-balance").textContent = `$${balance.toFixed(2)}`;
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error(data.error || 'Operation failed');
+            }
+
+            // Reload page to show updated balance
+            window.location.reload();
+
+        } catch (error) {
+            showMessage(error.message, false);
+        }
     }
 
     function showMessage(message, isSuccess = true) {
@@ -20,72 +43,31 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
     }
 
-    function logTransaction(type, fromAccount, toAccount, amount) {
-        const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-        transactions.push({
-            date: new Date().toISOString(),
-            type,
-            fromAccount,
-            toAccount,
-            amount: parseFloat(amount)
-        });
-        localStorage.setItem("transactions", JSON.stringify(transactions));
-    }
-
+    // Event Listeners
     document.getElementById("savings-depositButton").addEventListener("click", () => {
-        const depositInput = document.getElementById("savings-depositAmount");
-        const depositAmount = parseFloat(depositInput.value);
-        depositInput.value = "";
-
-        if (isNaN(depositAmount) || depositAmount <= 0) {
-            showMessage("Please enter a valid deposit amount.", false);
-            return;
+        const amount = parseFloat(document.getElementById("savings-depositAmount").value);
+        if (amount > 0) {
+            performOperation('deposit', amount);
+        } else {
+            showMessage("Please enter a valid amount", false);
         }
-
-        balance += depositAmount;
-        localStorage.setItem("savingsBalance", balance);
-        logTransaction("Deposit", "Savings", "-", depositAmount);
-        updateBalanceDisplay();
-        showMessage("Deposit successful!");
     });
 
     document.getElementById("savings-withdrawButton").addEventListener("click", () => {
-        const withdrawInput = document.getElementById("savings-withdrawAmount");
-        const withdrawAmount = parseFloat(withdrawInput.value);
-        withdrawInput.value = ""; // Clear input immediately
-
-        if (withdrawAmount > 0 && withdrawAmount <= balance) {
-            balance -= withdrawAmount;
-            localStorage.setItem("savingsBalance", balance);
-            logTransaction("Withdrawal", "Savings", "-", withdrawAmount);
-            updateBalanceDisplay();
-            showMessage("Withdrawal successful!");
+        const amount = parseFloat(document.getElementById("savings-withdrawAmount").value);
+        if (amount > 0) {
+            performOperation('withdraw', amount);
         } else {
-            showMessage("Invalid or insufficient funds.", false);
+            showMessage("Please enter a valid amount", false);
         }
     });
 
     document.getElementById("savings-transferButton").addEventListener("click", () => {
-        const transferInput = document.getElementById("savings-transferAmount");
-        const transferAmount = parseFloat(transferInput.value);
-
-        if (transferAmount > 0 && transferAmount <= balance) {
-            const checkingsBalance = parseFloat(localStorage.getItem("checkingsBalance")) || 0;
-            balance -= transferAmount;
-            localStorage.setItem("savingsBalance", balance);
-            localStorage.setItem("checkingsBalance", checkingsBalance + transferAmount);
-            logTransaction("Transfer", "Savings", "Checkings", transferAmount);
-            updateBalanceDisplay();
-            showMessage("Transfer successful!");
-            setTimeout(() => {
-                window.location.reload(); // Refresh the page after 1 second
-            }, 1000);
+        const amount = parseFloat(document.getElementById("savings-transferAmount").value);
+        if (amount > 0) {
+            performOperation('transfer', amount, 'savings', 'checking');
         } else {
-            showMessage("Invalid or insufficient funds for transfer.", false);
+            showMessage("Please enter a valid amount", false);
         }
-
-        transferInput.value = ""; // Clear the input field
     });
-
-    updateBalanceDisplay(); // Initialize balance display
 });
