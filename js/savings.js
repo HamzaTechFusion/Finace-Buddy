@@ -9,10 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const messageElement = document.getElementById("message");
         messageElement.textContent = message;
         messageElement.style.color = isSuccess ? "green" : "red";
-        messageElement.style.display = "block"; // Ensure the message is visible
+        messageElement.style.display = "block";
         setTimeout(() => {
-            messageElement.style.display = "none"; // Automatically hide message after 3 seconds
-        }, 3000); // Message will disappear after 3 seconds
+            messageElement.style.display = "none";
+        }, 3000);
     }
 
     function logTransaction(type, fromAccount, toAccount, amount) {
@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("transactions", JSON.stringify(transactions));
     }
 
+    // Deposit
     document.getElementById("depositButton").addEventListener("click", () => {
         const depositInput = document.getElementById("depositAmount");
         const depositAmount = parseFloat(depositInput.value);
@@ -41,16 +42,17 @@ document.addEventListener("DOMContentLoaded", () => {
             showMessage("Enter a valid deposit amount.", false);
         }
 
-        depositInput.value = ""; // Clear the input field
+        depositInput.value = "";
     });
 
+    // Withdraw
     document.getElementById("withdrawButton").addEventListener("click", () => {
         const withdrawInput = document.getElementById("withdrawAmount");
         const withdrawAmount = parseFloat(withdrawInput.value);
 
         if (withdrawAmount > 0 && withdrawAmount <= balance) {
             balance -= withdrawAmount;
-            localStorage.setItem("SavingsBalance", balance);
+            localStorage.setItem("savingsBalance", balance); // Fixed key
             logTransaction("Withdraw", "Savings", "-", withdrawAmount);
             updateBalanceDisplay();
             showMessage("Withdrawal successful!");
@@ -58,18 +60,19 @@ document.addEventListener("DOMContentLoaded", () => {
             showMessage("Invalid or insufficient funds.", false);
         }
 
-        withdrawInput.value = ""; // Clear the input field
+        withdrawInput.value = "";
     });
 
+    // Transfer to Checkings
     document.getElementById("transferButton").addEventListener("click", () => {
         const transferInput = document.getElementById("transferAmount");
         const transferAmount = parseFloat(transferInput.value);
 
         if (transferAmount > 0 && transferAmount <= balance) {
-            const savingsBalance = parseFloat(localStorage.getItem("checkingsBalance")) || 0;
+            const checkingsBalance = parseFloat(localStorage.getItem("checkingsBalance")) || 0;
             balance -= transferAmount;
             localStorage.setItem("savingsBalance", balance);
-            localStorage.setItem("checkingsBalance", checkingdBalance + transferAmount);
+            localStorage.setItem("checkingsBalance", checkingsBalance + transferAmount); // Fixed variable name
             logTransaction("Transfer", "Savings", "Checkings", transferAmount);
             updateBalanceDisplay();
             showMessage("Transfer successful!");
@@ -77,8 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
             showMessage("Invalid or insufficient funds for transfer.", false);
         }
 
-        transferInput.value = ""; // Clear the input field
+        transferInput.value = "";
     });
 
-    updateBalanceDisplay(); // Initialize balance display
+    updateBalanceDisplay();
 });
