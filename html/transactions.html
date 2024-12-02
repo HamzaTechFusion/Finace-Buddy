@@ -155,16 +155,16 @@
     <div class="navbar">
         <ul>
             <li><a href="../index.html">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Accounts</a>
-                    <ul class="dropdown-content">
-                        <li><a href="../html/checkings.html">Checkings</a></li>
-                        <li><a href="../html/savings.html">Savings</a></li>
-                    </ul>
-                </li>
-                <li><a href="../html/Credit-card.html">Credit Card</a></li>
-                <li><a href="../html/credit-score.html">Credit Score</a></li>
-                <li><a href="../html/transactions.html">Transactions</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Accounts</a>
+                <ul class="dropdown-content">
+                    <li><a href="../html/checkings.html">Checkings</a></li>
+                    <li><a href="../html/savings.html">Savings</a></li>
+                </ul>
+            </li>
+            <li><a href="../html/Credit-card.html">Credit Card</a></li>
+            <li><a href="../html/credit-score.html">Credit Score</a></li>
+            <li><a href="../html/transactions.html">Transactions</a></li>
         </ul>
     </div>
 
@@ -215,6 +215,9 @@
                 return;
             }
 
+            // Sort transactions by date, most recent first
+            filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
             filteredTransactions.forEach(transaction => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
@@ -222,7 +225,7 @@
                     <td>${transaction.type}</td>
                     <td>${transaction.fromAccount || "-"}</td>
                     <td>${transaction.toAccount || "-"}</td>
-                    <td>$${transaction.amount.toFixed(2)}</td>
+                    <td>$${parseFloat(transaction.amount).toFixed(2)}</td>
                 `;
                 transactionHistory.appendChild(row);
             });
