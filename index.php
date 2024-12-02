@@ -78,6 +78,10 @@ $conn->close();
         <div class="welcome-section">
             <h2>Welcome, <?php echo htmlspecialchars($user['username']); ?>!</h2>
             <p>Member since: <?php echo date('F j, Y', strtotime($user['created_at'])); ?></p>
+            
+            <div class="welcome-image">
+                <img src="assets/IMG_0094.jpg" alt="Finance Buddy Welcome" class="hero-image">
+            </div>
         </div>
 
         <div class="account-summary">
