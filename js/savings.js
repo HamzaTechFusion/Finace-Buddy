@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         messageElement.style.display = "block"; // Ensure the message is visible
         setTimeout(() => {
             messageElement.style.display = "none"; // Automatically hide message after 3 seconds
-        }, 3000); // Message will disappear after 3 seconds
+        }, 3000);
     }
 
     function logTransaction(type, fromAccount, toAccount, amount) {
