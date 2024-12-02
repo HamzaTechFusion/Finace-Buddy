@@ -3,7 +3,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateBalanceDisplay() {
         document.getElementById("balance").textContent = `$${balance.toFixed(2)}`;
-        console.log("Savings Balance Updated:", balance);
+    }
+
+    function showMessage(message, isSuccess = true) {
+        const messageElement = document.getElementById("message");
+        messageElement.textContent = message;
+        messageElement.style.color = isSuccess ? "green" : "red";
+        messageElement.style.display = "block"; // Ensure the message is visible
+        setTimeout(() => {
+            messageElement.style.display = "none"; // Automatically hide message after 3 seconds
+        }, 3000); // Message will disappear after 3 seconds
     }
 
     function logTransaction(type, fromAccount, toAccount, amount) {
@@ -19,45 +28,57 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.getElementById("depositButton").addEventListener("click", () => {
-        const depositAmount = parseFloat(document.getElementById("depositAmount").value);
+        const depositInput = document.getElementById("depositAmount");
+        const depositAmount = parseFloat(depositInput.value);
+
         if (depositAmount > 0) {
             balance += depositAmount;
             localStorage.setItem("savingsBalance", balance);
             logTransaction("Deposit", "Savings", "-", depositAmount);
             updateBalanceDisplay();
-            document.getElementById("message").textContent = "Deposit successful!";
+            showMessage("Deposit successful!");
         } else {
-            document.getElementById("message").textContent = "Invalid deposit amount.";
+            showMessage("Enter a valid deposit amount.", false);
         }
+
+        depositInput.value = ""; // Clear the input field
     });
 
     document.getElementById("withdrawButton").addEventListener("click", () => {
-        const withdrawAmount = parseFloat(document.getElementById("withdrawAmount").value);
+        const withdrawInput = document.getElementById("withdrawAmount");
+        const withdrawAmount = parseFloat(withdrawInput.value);
+
         if (withdrawAmount > 0 && withdrawAmount <= balance) {
             balance -= withdrawAmount;
-            localStorage.setItem("savingsBalance", balance);
+            localStorage.setItem("SavingsBalance", balance);
             logTransaction("Withdraw", "Savings", "-", withdrawAmount);
             updateBalanceDisplay();
-            document.getElementById("message").textContent = "Withdrawal successful!";
+            showMessage("Withdrawal successful!");
         } else {
-            document.getElementById("message").textContent = "Invalid or insufficient funds.";
+            showMessage("Invalid or insufficient funds.", false);
         }
+
+        withdrawInput.value = ""; // Clear the input field
     });
 
     document.getElementById("transferButton").addEventListener("click", () => {
-        const transferAmount = parseFloat(document.getElementById("transferAmount").value);
+        const transferInput = document.getElementById("transferAmount");
+        const transferAmount = parseFloat(transferInput.value);
+
         if (transferAmount > 0 && transferAmount <= balance) {
-            const checkingsBalance = parseFloat(localStorage.getItem("checkingsBalance")) || 0;
+            const savingsBalance = parseFloat(localStorage.getItem("checkingsBalance")) || 0;
             balance -= transferAmount;
             localStorage.setItem("savingsBalance", balance);
-            localStorage.setItem("checkingsBalance", checkingsBalance + transferAmount);
+            localStorage.setItem("checkingsBalance", checkingdBalance + transferAmount);
             logTransaction("Transfer", "Savings", "Checkings", transferAmount);
             updateBalanceDisplay();
-            document.getElementById("message").textContent = "Transfer successful!";
+            showMessage("Transfer successful!");
         } else {
-            document.getElementById("message").textContent = "Invalid or insufficient funds.";
+            showMessage("Invalid or insufficient funds for transfer.", false);
         }
+
+        transferInput.value = ""; // Clear the input field
     });
 
-    updateBalanceDisplay();
+    updateBalanceDisplay(); // Initialize balance display
 });
